@@ -35,6 +35,14 @@ Install with bower with:
 bower install ng2SmoothScroll
 ```
 
+# Npm
+
+Install with npm with:
+
+```bash
+npm install ng2-smooth-scroll
+```
+
 # Usage - As a directive
 
 This module provides two directives:
@@ -47,7 +55,7 @@ Example:
 ```html
 
 // Basic - The window will scroll to this element's position when compiling this directive
-<div smooth-scroll></div>
+<div smoothScroll></div>
 
 // With options
 <div smoothScroll
@@ -60,7 +68,7 @@ Example:
 </div>
 
 // Inside a custom container
-<div smooth-scroll
+<div smoothScroll
 	duration="800"
 	easing="easeInQuint"
 	offset="120"
@@ -177,27 +185,5 @@ The available easing functions are:
  * 'easeInQuint'
  * 'easeOutQuint'
  * 'easeInOutQuint'
-
-#### Credits
-
-Callback hooks contributed by Ben Armston.
-https://github.com/benarmston
-
-Easing support contributed by Willem Liu.
-https://github.com/willemliu
-
-Easing functions forked from Gaëtan Renaudeau.
-https://gist.github.com/gre/1650294
-
-Infinite loop bugs in iOS and Chrome (when zoomed) by Alex Guzman.
-https://github.com/alexguzman
-
-Support for scrolling in custom containers by Joseph Matthias Goh.
-https://github.com/zephinzer
-
-Influenced by Chris Ferdinandi
-https://github.com/cferdinandi
-
-Free to use under the MIT License.
 
 Cheers.

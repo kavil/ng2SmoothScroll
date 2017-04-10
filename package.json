@@ -1,0 +1,28 @@
+{
+  "name": "ng2-smooth-scroll",
+  "version": "1.0.1",
+  "description": "A pure-javascript library and set of directives to scroll smoothly to an element with easing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kavil/ng2SmoothScroll.git"
+  },
+  "keywords": [
+    "angularjs2",
+    "smooth scroll",
+    "scrolling",
+    "scroll effects",
+    "scroll animations",
+    "smooth",
+    "scroll"
+  ],
+  "author": "kavil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kavil/ng2SmoothScroll/issues"
+  },
+  "homepage": "https://github.com/kavil/ng2SmoothScroll#readme"
+}
