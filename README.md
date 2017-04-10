@@ -59,35 +59,35 @@ Example:
 
 // With options
 <div smoothScroll
-	duration="800"
-	easing="easeInQuint"
-	offset="120"
-	callbackBefore="aFunction(element)"
-	callbackAfter="anotherFunction">
+	[duration]="800"
+	[easing]="easeInQuint"
+	[offset]="120"
+	[callbackBefore]="aFunction(element)"
+	[callbackAfter]="anotherFunction">
 	{{...}}
 </div>
 
 // Inside a custom container
 <div smoothScroll
-	duration="800"
-	easing="easeInQuint"
-	offset="120"
-	callbackBefore="aFunction(element)"
-	callbackAfter="anotherFunction"
-	containerId="container-id">
+	[duration]="800"
+	[easing]="easeInQuint"
+	[offset]="120"
+	[callbackBefore]="aFunction(element)"
+	[callbackAfter]="anotherFunction"
+	[containerId]="container-id">
 	{{...}}
 </div>
 
 // With condition
 <div smoothScroll
-	scrollIf="{{ myExpression }}">
+	[scrollIf]="{{ myExpression }}">
 	{{...}}
 </div>
 
 // Inside ng-repeat
 <div smoothScroll
-	scrollIf="{{ $last }}"
-	duration="2500">
+	[scrollIf]="{{ $last }}"
+	[duration]="2500">
 	{{...}}
 </div>
 ```
@@ -101,29 +101,29 @@ Example:
 
 // Basic
 <a href="#"
-	scrollTo="my-element-3">
+	[scrollTo]="my-element-3">
 	Click me!
 </a>
 
 // Custom containers
 <a href="#"
-	scrollTo="my-element-3"
-	containerId="custom-container-id">
+	[scrollTo]="my-element-3"
+	[containerId]="custom-container-id">
 	Click me!
 </a>
 
 // onClick for non-anchor tags
-<div scrollTo="my-element-3"
-	containerId="custom-container-id">
+<div [scrollTo]="my-element-3"
+	[containerId]="custom-container-id">
 	Click me!
 </div>
 
 // With options
 <button
-	scrollTo="elem-id5"
-	duration="1800"
-	callbackBefore="aFunction(element)"
-	callbackAfter="anotherFunction">
+	[scrollTo]="elem-id5"
+	[duration]="1800"
+	[callbackBefore]="aFunction(element)"
+	[callbackAfter]="anotherFunction">
 	Scroll to next page.
 </button>
 
