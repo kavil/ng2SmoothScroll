@@ -1,8 +1,7 @@
 Angular2 smooth scroll
 ==============
-```bash
+
 > base on[Angular smooth scroll](https://github.com/d-oliveros/ngSmoothScroll)
-```
 
 A pure-javascript library and set of directives to scroll smoothly to an element with easing. Easing support contributed by Willem Liu with code from Gaëtan Renaudeau.
 
@@ -17,7 +16,7 @@ No jQuery required.
 
 # Installation
 
-```bash
+```js
 import { SmoothScrollToDirective, SmoothScrollDirective } from "ng2SmoothScroll";
 ...
 declarations[
