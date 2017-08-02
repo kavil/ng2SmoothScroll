@@ -199,7 +199,7 @@ class SmoothScroll {
 				) { // stop
 					clearInterval(runAnimation);
 
-					callbackAfter();
+					callbackAfter(element);
 				}
 			};
 
@@ -219,7 +219,7 @@ class SmoothScroll {
 				stopAnimation();
 			};
 
-			callbackBefore();
+			callbackBefore(element);
 
 			let runAnimation = setInterval(animateScroll, 16);
 		}, 0);
