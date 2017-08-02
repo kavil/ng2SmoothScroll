@@ -17,7 +17,7 @@ No jQuery required.
 # Installation
 
 ```js
-import { SmoothScrollToDirective, SmoothScrollDirective } from "ng2SmoothScroll";
+import { SmoothScrollToDirective, SmoothScrollDirective } from "ng2-smooth-scroll";
 ...
 declarations[
 	...
@@ -62,6 +62,7 @@ Example:
 	[duration]="800"
 	[easing]="easeInQuint"
 	[offset]="120"
+	[middleAlign]="true"
 	[callbackBefore]="aFunction(element)"
 	[callbackAfter]="anotherFunction">
 	{{...}}
@@ -80,13 +81,13 @@ Example:
 
 // With condition
 <div smoothScroll
-	[scrollIf]="{{ myExpression }}">
+	[scrollIf]="myExpression">
 	{{...}}
 </div>
 
 // Inside ng-repeat
 <div smoothScroll
-	[scrollIf]="{{ $last }}"
+	[scrollIf]="myExpression"
 	[duration]="2500">
 	{{...}}
 </div>
@@ -101,27 +102,28 @@ Example:
 
 // Basic
 <a href="#"
-	[scrollTo]="my-element-3">
+	[scrollTo]="'my-element-3'">
 	Click me!
 </a>
 
 // Custom containers
 <a href="#"
-	[scrollTo]="my-element-3"
+	[scrollTo]="'my-element-3'"
 	[containerId]="custom-container-id">
 	Click me!
 </a>
 
 // onClick for non-anchor tags
-<div [scrollTo]="my-element-3"
+<div [scrollTo]="'my-element-3'"
 	[containerId]="custom-container-id">
 	Click me!
 </div>
 
 // With options
 <button
-	[scrollTo]="elem-id5"
+	[scrollTo]="'elem-id5'"
 	[duration]="1800"
+	[middleAlign]="true"
 	[callbackBefore]="aFunction(element)"
 	[callbackAfter]="anotherFunction">
 	Scroll to next page.

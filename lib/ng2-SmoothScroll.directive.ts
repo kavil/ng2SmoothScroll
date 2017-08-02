@@ -1,55 +1,34 @@
-import { Directive, Input, HostListener } from '@angular/core';
+import { Directive, Input, HostListener, OnInit, ElementRef } from '@angular/core';
 
 @Directive({
 	selector: '[scrollTo]'
 })
-
 export class SmoothScrollToDirective {
 	targetElement: any;
-	callbackBeforeEx: any;
-	callbackAfterEx: any;
 
-	constructor() { }
+	constructor() {}
 
-	@Input() scrollTo: any;
-	@Input() duration: number;
-	@Input() offset: number;
-	@Input() easing: string;
-	@Input() callbackBefore: any;
-	@Input() callbackAfter: any;
-	@Input() containerId: string;
+	@Input('scrollTo') public scrollTo: string;
+	@Input('duration') public duration: number;
+	@Input('offset') public offset: number;
+	@Input('easing') public easing: string;
+	@Input('callbackBefore') public callbackBefore: any;
+	@Input('callbackAfter') public callbackAfter: any;
+	@Input('containerId') public containerId: string;
+	@Input('middleAlign') public middleAlign: any;
 
 	@HostListener('click') onClick() {
-
 		this.targetElement = document.getElementById(this.scrollTo);
 		if (!this.targetElement) return;
-		let _callbackBefore = this.callbackBefore;
-		let callbackBefore = function (element) {
-			if (_callbackBefore) {
-				let exprHandler = this.callbackBeforeEx({ element: element });
-				if (typeof exprHandler === 'function') {
-					exprHandler(element);
-				}
-			}
-		};
-
-		let _callbackAfter = this.callbackAfter;
-		let callbackAfter = function (element) {
-			if (_callbackAfter) {
-				let exprHandler = this.callbackAfterEx({ element: element });
-				if (typeof exprHandler === 'function') {
-					exprHandler(element);
-				}
-			}
-		};
 
 		new SmoothScroll(this.targetElement, {
 			duration: this.duration,
 			offset: this.offset,
 			easing: this.easing,
-			callbackBefore: callbackBefore,
-			callbackAfter: callbackAfter,
-			containerId: this.containerId
+			callbackBefore: this.callbackBefore,
+			callbackAfter: this.callbackAfter,
+			containerId: this.containerId,
+			middleAlign: this.middleAlign
 		});
 	};
 
@@ -58,53 +37,48 @@ export class SmoothScrollToDirective {
 @Directive({
 	selector: '[smoothScroll]'
 })
+export class SmoothScrollDirective implements OnInit {
+	private el;
 
-export class SmoothScrollDirective {
+	constructor(el: ElementRef) {
+		this.el = el;
+	}
 
-	constructor() { }
-
-	@Input() scrollIf: any;
-	@Input() duration: number;
-	@Input() offset: number;
-	@Input() easing: string;
-	@Input() callbackBefore: any;
-	@Input() callbackAfter: any;
-	@Input() containerId: string;
+	@Input('scrollIf') public scrollIf: boolean;
+	@Input('duration') public duration: number;
+	@Input('offset') public offset: number;
+	@Input('easing') public easing: string;
+	@Input('callbackBefore') public callbackBefore: any;
+	@Input('callbackAfter') public callbackAfter: any;
+	@Input('containerId') public containerId: string;
+	@Input('scrollOnClick') public scrollOnClick: boolean;
+	@Input('middleAlign') public middleAlign: any;
 
 	@HostListener('click', ['$event.target']) onClick(target) {
+		if (this.scrollOnClick) {
+			this.scroll();
+		}
+	};
 
-		if (typeof this.scrollIf === 'undefined' || this.scrollIf === 'true') {
-			setTimeout(function () {
+	public ngOnInit() {
+		this.scroll();
+	}
 
-				var callbackBefore = function (element) {
-					if (this.callbackBefore) {
-						var exprHandler = this.callbackBefore({ element: element });
-						if (typeof exprHandler === 'function') {
-							exprHandler(element);
-						}
-					}
-				};
-
-				var callbackAfter = function (element) {
-					if (this.callbackAfter) {
-						var exprHandler = this.callbackAfter({ element: element });
-						if (typeof exprHandler === 'function') {
-							exprHandler(element);
-						}
-					}
-				};
-
-				new SmoothScroll(target, {
+	private scroll() {
+		if (typeof this.scrollIf === 'undefined' || this.scrollIf === true) {
+			setTimeout(() => {
+				new SmoothScroll(this.el.nativeElement, {
 					duration: this.duration,
 					offset: this.offset,
 					easing: this.easing,
-					callbackBefore: callbackBefore,
-					callbackAfter: callbackAfter,
-					containerId: this.containerId
+					callbackBefore: this.callbackBefore,
+					callbackAfter: this.callbackAfter,
+					containerId: this.containerId,
+					middleAlign: this.middleAlign
 				});
 			}, 0);
 		}
-	};
+	}
 
 }
 
@@ -117,18 +91,19 @@ class SmoothScroll {
 		options = options || {};
 
 		// Options
-		var duration = options.duration || 800,
+		let duration = options.duration || 800,
 			offset = options.offset || 0,
 			easing = options.easing || 'easeInOutQuart',
-			callbackBefore = options.callbackBefore || function () { },
-			callbackAfter = options.callbackAfter || function () { },
+			callbackBefore = options.callbackBefore || function(){},
+			callbackAfter = options.callbackAfter || function(){},
 			container = document.getElementById(options.containerId) || null,
-			containerPresent = (container != undefined && container != null);
+			containerPresent = (container != undefined && container != null),
+			middleAlign = options.middleAlign || false;
 
 		/**
 		 * Retrieve current location
 		 */
-		var getScrollLocation = function () {
+		let getScrollLocation = function () {
 			if (containerPresent) {
 				return container.scrollTop;
 			} else {
@@ -147,7 +122,7 @@ class SmoothScroll {
 		 * - changed if-else to switch
 		 * @see http://archive.oreilly.com/pub/a/server-administration/excerpts/even-faster-websites/writing-efficient-javascript.html
 		 */
-		var getEasingPattern = function (type, time) {
+		let getEasingPattern = function (type, time) {
 			switch (type) {
 				case 'easeInQuad': return time * time; // accelerating from zero velocity
 				case 'easeOutQuad': return time * (2 - time); // decelerating to zero velocity
@@ -168,21 +143,27 @@ class SmoothScroll {
 		/**
 		 * Calculate how far to scroll
 		 */
-		var getEndLocation = function (element) {
-			var location = 0;
-			if (element.offsetParent) {
-				do {
-					location += element.offsetTop;
-					element = element.offsetParent;
-				} while (element);
+		let getEndLocation = function (element) {
+			let location = 0,
+				elementRect = element.getBoundingClientRect(),
+				absoluteElementTop = elementRect.top + window.pageYOffset;
+
+			if (middleAlign) {
+				location = (absoluteElementTop + (element.offsetHeight / 2)) - (window.innerHeight / 2);
+			} else {
+				location = absoluteElementTop;
 			}
-			location = Math.max(location - offset, 0);
-			return location;
+
+			if (offset) {
+				location = location - offset;
+			}
+
+			return Math.max(location, 0);
 		};
 
 		// Initialize the whole thing
 		setTimeout(function () {
-			var currentLocation = null,
+			let currentLocation = null,
 				startLocation = getScrollLocation(),
 				endLocation = getEndLocation(element),
 				timeLapsed = 0,
@@ -195,7 +176,7 @@ class SmoothScroll {
 			/**
 			 * Stop the scrolling animation when the anchor is reached (or at the top/bottom of the page)
 			 */
-			var stopAnimation = function () {
+			let stopAnimation = function () {
 				currentLocation = getScrollLocation();
 				if (containerPresent) {
 					scrollHeight = container.scrollHeight;
@@ -217,6 +198,7 @@ class SmoothScroll {
 					)
 				) { // stop
 					clearInterval(runAnimation);
+
 					callbackAfter(element);
 				}
 			};
@@ -224,7 +206,7 @@ class SmoothScroll {
 			/**
 			 * Scroll the page by an increment, and check if it's time to stop
 			 */
-			var animateScroll = function () {
+			let animateScroll = function () {
 				timeLapsed += 16;
 				percentage = (timeLapsed / duration);
 				percentage = (percentage > 1) ? 1 : percentage;
@@ -236,8 +218,10 @@ class SmoothScroll {
 				}
 				stopAnimation();
 			};
+
 			callbackBefore(element);
-			var runAnimation = setInterval(animateScroll, 16);
+
+			let runAnimation = setInterval(animateScroll, 16);
 		}, 0);
 
 	}
