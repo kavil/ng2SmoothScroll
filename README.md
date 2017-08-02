@@ -109,13 +109,13 @@ Example:
 // Custom containers
 <a href="#"
 	[scrollTo]="'my-element-3'"
-	[containerId]="'custom-container-id'">
+	[containerId]="custom-container-id">
 	Click me!
 </a>
 
 // onClick for non-anchor tags
 <div [scrollTo]="'my-element-3'"
-	[containerId]="'custom-container-id'">
+	[containerId]="custom-container-id">
 	Click me!
 </div>
 
