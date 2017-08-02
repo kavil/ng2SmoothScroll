@@ -1,6 +1,6 @@
 {
   "name": "ng2-smooth-scroll",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "A pure-javascript library and set of directives to scroll smoothly to an element with easing.",
   "main": "index.js",
   "scripts": {

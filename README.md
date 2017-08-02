@@ -17,6 +17,10 @@ No jQuery required.
 # Installation
 
 ```js
+// bower:
+import { SmoothScrollToDirective, SmoothScrollDirective } from "ng2SmoothScroll";
+
+// npm:
 import { SmoothScrollToDirective, SmoothScrollDirective } from "ng2-smooth-scroll";
 ...
 declarations[
@@ -151,6 +155,18 @@ type: `string`
 default: `easeInOutQuart`
 
 the easing function to be used for this scroll.
+
+#### middleAlign
+type: `boolean`
+default: `false`
+
+Middle align the scrolled element
+
+#### scrollOnClick
+type: `boolean`
+default: `false`
+
+(smoothScroll directive only) Scroll to element when it is clicked
 
 #### callbackBefore
 type: `function`
