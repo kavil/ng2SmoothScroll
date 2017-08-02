@@ -1,54 +1,32 @@
-import { Directive, Input, HostListener } from '@angular/core';
+import { Directive, Input, HostListener, OnInit, ElementRef } from '@angular/core';
 
 @Directive({
 	selector: '[scrollTo]'
 })
-
 export class SmoothScrollToDirective {
 	targetElement: any;
-	callbackBeforeEx: any;
-	callbackAfterEx: any;
 
-	constructor() { }
+	constructor() {}
 
-	@Input() scrollTo: any;
-	@Input() duration: number;
-	@Input() offset: number;
-	@Input() easing: string;
-	@Input() callbackBefore: any;
-	@Input() callbackAfter: any;
-	@Input() containerId: string;
+	@Input('scrollTo') public scrollTo: string;
+	@Input('duration') public duration: number;
+	@Input('offset') public offset: number;
+	@Input('easing') public easing: string;
+	@Input('callbackBefore') public callbackBefore: any;
+	@Input('callbackAfter') public callbackAfter: any;
+	@Input('containerId') public containerId: string;
 
 	@HostListener('click') onClick() {
 
 		this.targetElement = document.getElementById(this.scrollTo);
 		if (!this.targetElement) return;
-		let _callbackBefore = this.callbackBefore;
-		let callbackBefore = function (element) {
-			if (_callbackBefore) {
-				let exprHandler = this.callbackBeforeEx({ element: element });
-				if (typeof exprHandler === 'function') {
-					exprHandler(element);
-				}
-			}
-		};
-
-		let _callbackAfter = this.callbackAfter;
-		let callbackAfter = function (element) {
-			if (_callbackAfter) {
-				let exprHandler = this.callbackAfterEx({ element: element });
-				if (typeof exprHandler === 'function') {
-					exprHandler(element);
-				}
-			}
-		};
 
 		new SmoothScroll(this.targetElement, {
 			duration: this.duration,
 			offset: this.offset,
 			easing: this.easing,
-			callbackBefore: callbackBefore,
-			callbackAfter: callbackAfter,
+			callbackBefore: this.callbackBefore,
+			callbackAfter: this.callbackAfter,
 			containerId: this.containerId
 		});
 	};
@@ -58,53 +36,46 @@ export class SmoothScrollToDirective {
 @Directive({
 	selector: '[smoothScroll]'
 })
+export class SmoothScrollDirective implements OnInit {
+	private el;
 
-export class SmoothScrollDirective {
+	constructor(el: ElementRef) {
+		this.el = el;
+	}
 
-	constructor() { }
-
-	@Input() scrollIf: any;
-	@Input() duration: number;
-	@Input() offset: number;
-	@Input() easing: string;
-	@Input() callbackBefore: any;
-	@Input() callbackAfter: any;
-	@Input() containerId: string;
+	@Input('scrollIf') public scrollIf: boolean;
+	@Input('duration') public duration: number;
+	@Input('offset') public offset: number;
+	@Input('easing') public easing: string;
+	@Input('callbackBefore') public callbackBefore: any;
+	@Input('callbackAfter') public callbackAfter: any;
+	@Input('containerId') public containerId: string;
+	@Input('scrollOnClick') public scrollOnClick: boolean;
 
 	@HostListener('click', ['$event.target']) onClick(target) {
+		if (this.scrollOnClick) {
+			this.scroll();
+		}
+	};
 
-		if (typeof this.scrollIf === 'undefined' || this.scrollIf === 'true') {
-			setTimeout(function () {
+	public ngOnInit() {
+		this.scroll();
+	}
 
-				var callbackBefore = function (element) {
-					if (this.callbackBefore) {
-						var exprHandler = this.callbackBefore({ element: element });
-						if (typeof exprHandler === 'function') {
-							exprHandler(element);
-						}
-					}
-				};
-
-				var callbackAfter = function (element) {
-					if (this.callbackAfter) {
-						var exprHandler = this.callbackAfter({ element: element });
-						if (typeof exprHandler === 'function') {
-							exprHandler(element);
-						}
-					}
-				};
-
-				new SmoothScroll(target, {
+	private scroll() {
+		if (typeof this.scrollIf === 'undefined' || this.scrollIf === true) {
+			setTimeout(() => {
+				new SmoothScroll(this.el.nativeElement, {
 					duration: this.duration,
 					offset: this.offset,
 					easing: this.easing,
-					callbackBefore: callbackBefore,
-					callbackAfter: callbackAfter,
+					callbackBefore: this.callbackBefore,
+					callbackAfter: this.callbackAfter,
 					containerId: this.containerId
 				});
 			}, 0);
 		}
-	};
+	}
 
 }
 
@@ -120,8 +91,8 @@ class SmoothScroll {
 		var duration = options.duration || 800,
 			offset = options.offset || 0,
 			easing = options.easing || 'easeInOutQuart',
-			callbackBefore = options.callbackBefore || function () { },
-			callbackAfter = options.callbackAfter || function () { },
+			callbackBefore = options.callbackBefore || function(){},
+			callbackAfter = options.callbackAfter || function(){},
 			container = document.getElementById(options.containerId) || null,
 			containerPresent = (container != undefined && container != null);
 
@@ -217,7 +188,8 @@ class SmoothScroll {
 					)
 				) { // stop
 					clearInterval(runAnimation);
-					callbackAfter(element);
+
+					callbackAfter();
 				}
 			};
 
@@ -236,7 +208,9 @@ class SmoothScroll {
 				}
 				stopAnimation();
 			};
-			callbackBefore(element);
+
+			callbackBefore();
+
 			var runAnimation = setInterval(animateScroll, 16);
 		}, 0);
 

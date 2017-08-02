@@ -17,7 +17,7 @@ No jQuery required.
 # Installation
 
 ```js
-import { SmoothScrollToDirective, SmoothScrollDirective } from "ng2SmoothScroll";
+import { SmoothScrollToDirective, SmoothScrollDirective } from "ng2-smooth-scroll";
 ...
 declarations[
 	...
@@ -80,13 +80,13 @@ Example:
 
 // With condition
 <div smoothScroll
-	[scrollIf]="{{ myExpression }}">
+	[scrollIf]="myExpression">
 	{{...}}
 </div>
 
 // Inside ng-repeat
 <div smoothScroll
-	[scrollIf]="{{ $last }}"
+	[scrollIf]="myExpression"
 	[duration]="2500">
 	{{...}}
 </div>
@@ -108,13 +108,13 @@ Example:
 // Custom containers
 <a href="#"
 	[scrollTo]="my-element-3"
-	[containerId]="custom-container-id">
+	[containerId]="'custom-container-id'">
 	Click me!
 </a>
 
 // onClick for non-anchor tags
 <div [scrollTo]="my-element-3"
-	[containerId]="custom-container-id">
+	[containerId]="'custom-container-id'">
 	Click me!
 </div>
 
