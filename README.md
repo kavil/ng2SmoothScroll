@@ -17,6 +17,10 @@ No jQuery required.
 # Installation
 
 ```js
+// bower:
+import { SmoothScrollToDirective, SmoothScrollDirective } from "ng2SmoothScroll";
+
+// npm:
 import { SmoothScrollToDirective, SmoothScrollDirective } from "ng2-smooth-scroll";
 ...
 declarations[
