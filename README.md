@@ -152,6 +152,18 @@ default: `easeInOutQuart`
 
 the easing function to be used for this scroll.
 
+#### middleAlign
+type: `boolean`
+default: `false`
+
+Middle align the scrolled element
+
+#### scrollOnClick
+type: `boolean`
+default: `false`
+
+(smoothScroll directive only) Scroll to element when it is clicked
+
 #### callbackBefore
 type: `function`
 default: `function(element) {}`
