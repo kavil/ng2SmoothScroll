@@ -194,7 +194,7 @@ class SmoothScroll {
 						currentLocation == endLocation
 					) ||
 					( // condition 3
-						internalHeight >= scrollHeight
+						internalHeight > scrollHeight
 					)
 				) { // stop
 					clearInterval(runAnimation);
